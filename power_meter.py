@@ -110,7 +110,7 @@ class Power_meter():
             "vol_l2" : bytestring[vol_l2_i : vol_l2_i + 2],
             "vol_l3" : bytestring[vol_l3_i : vol_l3_i + 2],
         }
-       
+
         if len(bytestring) > 500: # long list
             sum_KWH_in_i = bytestring.find("0101010800FF") + 14
             sum_KWH_out_i = bytestring.find("0101020800FF") + 14
@@ -125,7 +125,7 @@ class Power_meter():
             else:
                 print(i, int(y, 16))
         print("---------------------")
-        logger.info("Data printet to screen")
+        logger.info("Data printed to screen")
 
     def publish_data(self, data):
         counter = 0
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     logger.info("Starting script")
     mqttc = MyMQTTClass()
     mqttc.run()
-    time.sleep(1)
+    time.sleep(10)
     app = Power_meter()
     logger.info("Starting loop.")
     while True:

@@ -1,0 +1,75 @@
+2019-02-02 21:52:43,827 - rotatingLogger - INFO - Starting script
+2019-02-02 21:52:43,827 - rotatingLogger - INFO - Broker client created.
+2019-02-02 21:52:43,829 - rotatingLogger - INFO - Connecting to broker:
+2019-02-02 21:52:43,832 - rotatingLogger - INFO - Connected, rc: 0
+2019-02-02 21:52:44,837 - rotatingLogger - INFO - connected to: /dev/ttyUSB0
+2019-02-02 21:52:44,838 - rotatingLogger - INFO - Starting loop.
+2019-02-02 21:52:51,961 - rotatingLogger - INFO - 2019-02-02T21:52:51.960875 Recieved 228 bytes of True data
+2019-02-02 21:52:51,964 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:52:51,976 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:53:01,961 - rotatingLogger - INFO - 2019-02-02T21:53:01.961767 Recieved 228 bytes of True data
+2019-02-02 21:53:01,964 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:53:01,972 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:53:11,961 - rotatingLogger - INFO - 2019-02-02T21:53:11.961400 Recieved 228 bytes of True data
+2019-02-02 21:53:11,968 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:53:11,982 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:53:21,961 - rotatingLogger - INFO - 2019-02-02T21:53:21.961034 Recieved 228 bytes of True data
+2019-02-02 21:53:21,965 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:53:21,976 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:53:31,960 - rotatingLogger - INFO - 2019-02-02T21:53:31.960684 Recieved 228 bytes of True data
+2019-02-02 21:53:31,963 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:53:31,972 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:53:41,961 - rotatingLogger - INFO - 2019-02-02T21:53:41.961590 Recieved 228 bytes of True data
+2019-02-02 21:53:41,964 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:53:41,973 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:53:51,961 - rotatingLogger - INFO - 2019-02-02T21:53:51.961223 Recieved 228 bytes of True data
+2019-02-02 21:53:51,963 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:53:51,969 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:54:01,959 - rotatingLogger - INFO - 2019-02-02T21:54:01.959613 Recieved 228 bytes of True data
+2019-02-02 21:54:01,962 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:54:01,968 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:54:11,960 - rotatingLogger - INFO - 2019-02-02T21:54:11.960501 Recieved 228 bytes of True data
+2019-02-02 21:54:11,963 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:54:11,969 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:54:21,960 - rotatingLogger - INFO - 2019-02-02T21:54:21.960181 Recieved 228 bytes of True data
+2019-02-02 21:54:21,962 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:54:21,969 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:54:31,960 - rotatingLogger - INFO - 2019-02-02T21:54:31.959792 Recieved 228 bytes of True data
+2019-02-02 21:54:31,962 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:54:31,968 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:54:41,959 - rotatingLogger - INFO - 2019-02-02T21:54:41.959434 Recieved 228 bytes of True data
+2019-02-02 21:54:41,962 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:54:41,974 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:54:51,959 - rotatingLogger - INFO - 2019-02-02T21:54:51.959241 Recieved 228 bytes of True data
+2019-02-02 21:54:51,962 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:54:51,972 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:55:01,961 - rotatingLogger - INFO - 2019-02-02T21:55:01.961221 Recieved 228 bytes of True data
+2019-02-02 21:55:01,964 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:55:01,973 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:55:11,962 - rotatingLogger - INFO - 2019-02-02T21:55:11.962171 Recieved 228 bytes of True data
+2019-02-02 21:55:11,967 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:55:11,985 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:55:21,960 - rotatingLogger - INFO - 2019-02-02T21:55:21.960535 Recieved 228 bytes of True data
+2019-02-02 21:55:21,965 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:55:21,983 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:55:31,961 - rotatingLogger - INFO - 2019-02-02T21:55:31.961419 Recieved 228 bytes of True data
+2019-02-02 21:55:31,966 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:55:31,985 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:55:41,962 - rotatingLogger - INFO - 2019-02-02T21:55:41.962317 Recieved 228 bytes of True data
+2019-02-02 21:55:41,967 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:55:41,985 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:55:51,960 - rotatingLogger - INFO - 2019-02-02T21:55:51.960735 Recieved 228 bytes of True data
+2019-02-02 21:55:51,966 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:55:51,982 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:56:01,960 - rotatingLogger - INFO - 2019-02-02T21:56:01.960347 Recieved 228 bytes of True data
+2019-02-02 21:56:01,965 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:56:01,983 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:56:11,958 - rotatingLogger - INFO - 2019-02-02T21:56:11.958743 Recieved 228 bytes of True data
+2019-02-02 21:56:11,963 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:56:11,982 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:56:21,962 - rotatingLogger - INFO - 2019-02-02T21:56:21.962130 Recieved 228 bytes of True data
+2019-02-02 21:56:21,967 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:56:21,984 - rotatingLogger - INFO - 12 data points published
+2019-02-02 21:56:31,976 - rotatingLogger - INFO - 2019-02-02T21:56:31.976770 Recieved 228 bytes of True data
+2019-02-02 21:56:31,982 - rotatingLogger - INFO - Data printet to screen
+2019-02-02 21:56:32,000 - rotatingLogger - INFO - 12 data points published
