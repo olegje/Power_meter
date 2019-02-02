@@ -1,6 +1,6 @@
 #!/usr/bin/python
 ########################################################################
-# Filename    : SendRomTemp_mqtt2.py
+# Filename    : power_meter.py
 # Description : Script to read and send power metrics to MQTT broker
 # Author      : Gjengedal
 # modification: 02.02.2018
