@@ -133,7 +133,12 @@ class Power_meter():
             if len(y) > 8:
                 mqttc.publish(i, y.decode("hex"))
             else:
-                mqttc.publish(i, int(y, 16))
+                if "cur_l" in i:
+                    x = int(y, 16)
+                    x = float(x) / 100
+                    mqttc.publish(i, x)
+                else:
+                    mqttc.publish(i, int(y, 16))
             counter = counter + 1
         logger.info("%s data points published" % counter)
 
@@ -165,7 +170,7 @@ if __name__ == '__main__':
             raw_bytes = app.read_bytes()
             if app.test_data(raw_bytes):
                 clean_data = app.parse_data(raw_bytes)
-                app.print_data(clean_data)
+                #app.print_data(clean_data) # uncomment if you want to print data to screen
                 app.publish_data(clean_data)
         except KeyboardInterrupt:
             logger.info("exit from keyboard")
@@ -174,4 +179,4 @@ if __name__ == '__main__':
             break
         except Exception as e:
             logger.error(e)
-            break
+            time.sleep(3)
