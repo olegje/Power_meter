@@ -133,9 +133,13 @@ class Power_meter():
             if len(y) > 8:
                 mqttc.publish(i, y.decode("hex"))
             else:
-                if "cur_l" in i:
+                if "cur_l" in i: # format current
                     x = int(y, 16)
                     x = float(x) / 100
+                    mqttc.publish(i, x)
+                if "sum" in i: # format total consumtion to WH
+                    z = int(y, 16)
+                    z = float(x) * 10
                     mqttc.publish(i, x)
                 else:
                     mqttc.publish(i, int(y, 16))
