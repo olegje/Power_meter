@@ -139,8 +139,8 @@ class Power_meter():
                     mqttc.publish(i, x)
                 if "sum" in i: # format total consumtion to WH
                     z = int(y, 16)
-                    z = float(x) * 10
-                    mqttc.publish(i, x)
+                    z = float(z) * 10
+                    mqttc.publish(i, z)
                 else:
                     mqttc.publish(i, int(y, 16))
             counter = counter + 1
