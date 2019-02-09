@@ -76,7 +76,7 @@ class Power_meter():
 
         if not data[0] and data[-1] == "7E ":
             valid_data = False
-        logger.info("%s Recieved %s bytes of %s data" % (datetime.datetime.now().isoformat(), len(data), valid_data))
+        logger.debug("%s Recieved %s bytes of %s data" % (datetime.datetime.now().isoformat(), len(data), valid_data))
         return valid_data
 
 
@@ -118,31 +118,31 @@ class Power_meter():
             bs_list["sum_kwh_out"] = bytestring[sum_KWH_out_i : sum_KWH_out_i + 8]
         return bs_list
 
-    def print_data(self, data):
+    def format_data(self, data):
+        new_format = {}
         for i, y in data.items():
             if len(y) > 8:
-                print(i, y.decode("hex"))
+                new_format[i] = y.decode("hex")
+            elif "cur_l" in i: # format current
+                x = int(y, 16)
+                new_format[i] = float(x) / 100
+            elif "sum" in i: # format total consumtion to WH
+                z = int(y, 16)
+                new_format[i] = float(z) * 10
             else:
-                print(i, int(y, 16))
+                new_format[i] = int(y, 16)       
+        return new_format
+
+    def print_data(self, data):
+        for i, y in data.items():
+            print(i, y)
         print("---------------------")
         logger.info("Data printed to screen")
 
     def publish_data(self, data):
         counter = 0
         for i, y in data.items():
-            if len(y) > 8:
-                mqttc.publish(i, y.decode("hex"))
-            else:
-                if "cur_l" in i: # format current
-                    x = int(y, 16)
-                    x = float(x) / 100
-                    mqttc.publish(i, x)
-                if "sum" in i: # format total consumtion to WH
-                    z = int(y, 16)
-                    z = float(z) * 10
-                    mqttc.publish(i, z)
-                else:
-                    mqttc.publish(i, int(y, 16))
+            mqttc.publish(i, y)
             counter = counter + 1
         logger.info("%s data points published" % counter)
 
@@ -159,6 +159,7 @@ class Power_meter():
                 byteCounter = byteCounter + 1
             else:
                 logger.error("No data, check wiring!")
+                time.sleep(5)
 
 
 if __name__ == '__main__':
@@ -173,9 +174,10 @@ if __name__ == '__main__':
         try:
             raw_bytes = app.read_bytes()
             if app.test_data(raw_bytes):
-                clean_data = app.parse_data(raw_bytes)
-                #app.print_data(clean_data) # uncomment if you want to print data to screen
-                app.publish_data(clean_data)
+                clean_bytes = app.parse_data(raw_bytes)
+                formated_bytes = app.format_data(clean_bytes)                
+                #app.print_data(formated_bytes) # uncomment if you want to print data to screen
+                app.publish_data(formated_bytes)
         except KeyboardInterrupt:
             logger.info("exit from keyboard")
             mqttc.disconnect()
@@ -183,4 +185,4 @@ if __name__ == '__main__':
             break
         except Exception as e:
             logger.error(e)
-            time.sleep(3)
+            time.sleep(5)
