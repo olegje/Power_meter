@@ -165,17 +165,16 @@ class Power_meter():
         byteCounter = 0
         bytelist = []
         while True:
-            a = self.ser.read() # reads one byte
+            a = self.ser.read(1000) # reads up to 1000 bytes. Times out after 1 sec?
             if a:
-                a = ('%02x ' % int(a.encode('hex'), 16)).upper()
-                bytelist.append(a)
-                if a == "7E " and byteCounter > 1:
-                    return bytelist
-                byteCounter = byteCounter + 1
+                a.hex()
+                print(a)
+                #byteCounter = byteCounter + 1
+                return a
             else:
                 print("Timeout")
                 logger.error("No data, check wiring!")
-                time.sleep(5)
+                time.sleep(1)
 
 
 if __name__ == '__main__':
