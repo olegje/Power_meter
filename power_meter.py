@@ -96,8 +96,7 @@ class Power_meter():
         return datastring, crc
 
     def parse_data(self, bytestring):
-        #data = [x.strip(' ') for x in data]
-        #bytestring = "".join(data)
+
         meter_id_i = bytestring.find("0101000005FF") + 16
         meter_type_i = bytestring.find("0101600101FF") + 16
         act_pwr1_i = bytestring.find("0101010700FF") + 14 # Active import power
