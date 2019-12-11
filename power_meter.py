@@ -162,15 +162,15 @@ class Power_meter():
 
     def read_bytes(self):
         #New read function:
-        byteCounter = 0
-        bytelist = []
+        #byteCounter = 0
+        #bytelist = []
         while True:
             a = self.ser.read(1000) # reads up to 1000 bytes. Times out after 1 sec?
             if a:
-                a.hex()
-                print(a)
+                b = binascii.hexlify(a)
+                print(b)
                 #byteCounter = byteCounter + 1
-                return a
+                return b
             else:
                 print("Timeout")
                 logger.error("No data, check wiring!")
