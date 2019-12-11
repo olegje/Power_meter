@@ -173,7 +173,7 @@ class Power_meter():
                     return bytelist
                 byteCounter = byteCounter + 1
             else:
-                Print("Timeout")
+                print("Timeout")
                 logger.error("No data, check wiring!")
                 time.sleep(5)
 
