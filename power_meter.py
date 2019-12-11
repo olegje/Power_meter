@@ -162,10 +162,10 @@ class Power_meter():
 
     def read_bytes(self):
         #New read function:
-        #byteCounter = 0
+        timeouts = 0
         #bytelist = []
         while True:
-            a = self.ser.read(1000) # reads up to 1000 bytes. Times out after 1 sec?
+            a = self.ser.read(1000) # reads up to 1000 bytes. Times out after 6 sec
             if a:
                 b = binascii.hexlify(a)
                 print(b.upper())
@@ -173,8 +173,11 @@ class Power_meter():
                 return b.upper()
             else:
                 print("Timeout")
-                logger.error("No data, check wiring!")
-                #time.sleep(1)
+                timeouts = timeouts + 1
+                if timeouts > 3:
+                    print("More than 3 timeouts")
+                    logger.error("No data, check wiring!")
+                    break
 
 
 if __name__ == '__main__':
