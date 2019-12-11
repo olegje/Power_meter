@@ -67,7 +67,7 @@ class Power_meter():
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
             bytesize=serial.EIGHTBITS,
-            timeout=1) # 10 original
+            timeout=3) # 10 original
         logger.info("connected to: " + self.ser.portstr)
 
     def test_data(self, data):
