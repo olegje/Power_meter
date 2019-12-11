@@ -89,8 +89,8 @@ class Power_meter():
         print("trimming data:")
         x = [x.strip(' ') for x in data]
         bytestring = "".join(x)
-        datastring = bytestring[2:-2]
-        crc = datastring[-4:]
+        datastring = bytestring[2:-6]
+        crc = bytestring[-4:]
         print("Datastring: %s" % datastring)
         print("Crc: %s" % crc)
         return datastring, crc
