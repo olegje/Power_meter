@@ -161,6 +161,7 @@ class Power_meter():
         logger.debug("%s data points published" % counter)
 
     def read_bytes(self):
+        #New read function:
         byteCounter = 0
         bytelist = []
         while True:
