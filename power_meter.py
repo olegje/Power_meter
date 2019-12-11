@@ -174,7 +174,7 @@ class Power_meter():
             else:
                 print("Timeout")
                 logger.error("No data, check wiring!")
-                time.sleep(1)
+                #time.sleep(1)
 
 
 if __name__ == '__main__':
