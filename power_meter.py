@@ -84,7 +84,7 @@ class Power_meter():
 
     def trim_data(self, data):
         # Trim data for start and end flag.
-        #Returns 16bit CRC and data as a tuple
+        #Returns data and 16bit CRC as a tuple.
         print("Data: %s" % data)
         print("trimming data:")
         x = [x.strip(' ') for x in data]
@@ -159,7 +159,7 @@ class Power_meter():
         for i, y in data.items():
             mqttc.publish(i, y)
             counter = counter + 1
-        logger.info("%s data points published" % counter)
+        logger.debug("%s data points published" % counter)
 
     def read_bytes(self):
         byteCounter = 0
@@ -188,7 +188,6 @@ if __name__ == '__main__':
     while True:
         try:
             raw_bytes = app.read_bytes()
-            #trim data and extract CRC
             trimmed_data = app.trim_data(raw_bytes)
             if app.test_data(trimmed_data):
                 clean_bytes = app.parse_data(trimmed_data[0])
