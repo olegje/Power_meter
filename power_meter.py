@@ -67,7 +67,7 @@ class Power_meter():
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
             bytesize=serial.EIGHTBITS,
-            timeout=10)
+            timeout=1) # 10 original
         logger.info("connected to: " + self.ser.portstr)
 
     def test_data(self, data):
@@ -165,7 +165,7 @@ class Power_meter():
         byteCounter = 0
         bytelist = []
         while True:
-            a = self.ser.read()
+            a = self.ser.read() # reads one byte
             if a:
                 a = ('%02x ' % int(a.encode('hex'), 16)).upper()
                 bytelist.append(a)
@@ -173,6 +173,7 @@ class Power_meter():
                     return bytelist
                 byteCounter = byteCounter + 1
             else:
+                Print("Timeout")
                 logger.error("No data, check wiring!")
                 time.sleep(5)
 
