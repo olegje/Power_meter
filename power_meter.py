@@ -3,7 +3,7 @@
 # Filename    : power_meter_debug.py
 # Description : Script to read and log all data
 # Author      : Gjengedal
-# modification: 12.12.2019
+# Modification: 12.12.2019
 ########################################################################
 from __future__ import print_function
 import serial
@@ -67,7 +67,7 @@ class Power_meter():
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
             bytesize=serial.EIGHTBITS,
-            timeout=6) # 10 original
+            timeout=10)
         logger.info("connected to: " + self.ser.portstr)
 
     def test_data(self, data):
@@ -76,23 +76,18 @@ class Power_meter():
         y = CrcX25.calchex(data=x, byteorder="little")
         if str.upper(y) == data[1]:
             logger.debug("%s Recieved %s bytes of true data" % (datetime.datetime.now().isoformat(), len(data[0])))
-            print("%s Recieved %s bytes of true data" % (datetime.datetime.now().isoformat(), len(data[0])))
             return True
         logger.warning("%s Recieved %s bytes of false data" % (datetime.datetime.now().isoformat(), len(data[0])))
-        print("%s Recieved %s bytes of false data" % (datetime.datetime.now().isoformat(), len(data[0])))
         return False
 
     def trim_data(self, data):
-        # Trim data for start and end flag.
-        #Returns data and 16bit CRC as a tuple.
-        print("Data: %s" % data)
-        print("trimming data:")
+        # Trims data for start and end flag.
+        # Returns data and 16bit CRC as a tuple.
+
         x = [x.strip(' ') for x in data]
         bytestring = "".join(x)
         datastring = bytestring[2:-6]
         crc = bytestring[-6:-2]
-        print("Datastring: %s" % datastring)
-        print("Crc: %s" % crc)
         return datastring, crc
 
     def parse_data(self, bytestring):
@@ -161,23 +156,17 @@ class Power_meter():
         logger.debug("%s data points published" % counter)
 
     def read_bytes(self):
-        #New read function:
         timeouts = 0
-        #bytelist = []
         while True:
-            a = self.ser.read(1000) # reads up to 1000 bytes. Times out after 6 sec
+            a = self.ser.read(700) # reads up to 700 bytes. Times out after 10 sec
             if a:
                 b = binascii.hexlify(a)
-                print(b.upper())
-                #byteCounter = byteCounter + 1
                 return b.upper()
             else:
-                print("Timeout")
                 timeouts = timeouts + 1
-                if timeouts > 3:
-                    print("More than 3 timeouts")
+                if timeouts > 4:
                     logger.error("No data, check wiring!")
-                    break
+                    timeouts = 0 # reset conuter and go back to loop
 
 
 if __name__ == '__main__':
