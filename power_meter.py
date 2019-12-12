@@ -6,8 +6,8 @@
 # Modification: 12.12.2019
 ########################################################################
 from __future__ import print_function
-import sys, os #Not needed?
-sys.path.append('/Data/Power_meter') #not needed?
+#import sys, os #Not needed?
+#sys.path.append('/Data/Power_meter') #not needed?
 
 import serial
 import sys
@@ -70,7 +70,7 @@ class Power_meter():
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
             bytesize=serial.EIGHTBITS,
-            timeout=10)
+            timeout=9)
         logger.info("connected to: " + self.ser.portstr)
 
     def test_data(self, data):
@@ -158,10 +158,29 @@ class Power_meter():
             counter = counter + 1
         logger.debug("%s data points published" % counter)
 
+
     def read_bytes(self):
+        byteCounter = 0
+        bytelist = []
         timeouts = 0
         while True:
-            a = self.ser.read(700) # reads up to 700 bytes. Times out after 10 sec
+            a = self.ser.read() #Times out after 1 sec
+            if a:
+                a = ('%02x ' % int(a.encode('hex'), 16)).upper()
+                bytelist.append(a)
+                if a == "7E " and byteCounter > 1 and timeouts > 1:
+                    return bytelist
+                byteCounter = byteCounter + 1
+            else:
+                timeouts = timeouts + 1
+                if timeouts > 4:
+                    logger.error("No data, check wiring!")
+                    timeouts = 0 # reset conuter and go back to loop
+
+"""     def read_bytes(self):
+        timeouts = 0
+        while True:
+            a = self.ser.read(700) # reads up to 700 bytes. Times out after 1 sec
             if a:
                 b = binascii.hexlify(a)
                 return b.upper()
@@ -170,11 +189,11 @@ class Power_meter():
                 if timeouts > 4:
                     logger.error("No data, check wiring!")
                     timeouts = 0 # reset conuter and go back to loop
-
+ """
 
 if __name__ == '__main__':
     #flow:
-    logger.info("Starting script in debug mode")
+    logger.info("Starting script in INFO mode")
     mqttc = MyMQTTClass()
     mqttc.run()
     time.sleep(10)
