@@ -1,9 +1,9 @@
 #!/usr/bin/python
 ########################################################################
-# Filename    : power_meter.py
-# Description : Script to read and send power metrics to MQTT broker
+# Filename    : power_meter_debug.py
+# Description : Script to read and log all data
 # Author      : Gjengedal
-# modification: 02.02.2018
+# Modification: 12.12.2019
 ########################################################################
 from __future__ import print_function
 import serial
@@ -15,6 +15,8 @@ import glob
 import logging
 import logging.config
 import paho.mqtt.client as mqtt
+import binascii
+from crccheck.crc import CrcX25
 
 # create logger
 logging.config.fileConfig('logging.conf')
@@ -69,20 +71,27 @@ class Power_meter():
         logger.info("connected to: " + self.ser.portstr)
 
     def test_data(self, data):
-        # Do some tests...
-        valid_data = True
-        if len(data) > 400 or len(data) < 200:
-            valid_data = False
+        # Preform Crc x25 check on data.
+        x = bytearray.fromhex(data[0])
+        y = CrcX25.calchex(data=x, byteorder="little")
+        if str.upper(y) == data[1]:
+            logger.debug("%s Recieved %s bytes of true data" % (datetime.datetime.now().isoformat(), len(data[0])))
+            return True
+        logger.warning("%s Recieved %s bytes of false data" % (datetime.datetime.now().isoformat(), len(data[0])))
+        return False
 
-        if not data[0] and data[-1] == "7E ":
-            valid_data = False
-        logger.debug("%s Recieved %s bytes of %s data" % (datetime.datetime.now().isoformat(), len(data), valid_data))
-        return valid_data
+    def trim_data(self, data):
+        # Trims data for start and end flag.
+        # Returns data and 16bit CRC as a tuple.
 
+        x = [x.strip(' ') for x in data]
+        bytestring = "".join(x)
+        datastring = bytestring[2:-6]
+        crc = bytestring[-6:-2]
+        return datastring, crc
 
-    def parse_data(self, data):
-        data = [x.strip(' ') for x in data]
-        bytestring = "".join(data)
+    def parse_data(self, bytestring):
+
         meter_id_i = bytestring.find("0101000005FF") + 16
         meter_type_i = bytestring.find("0101600101FF") + 16
         act_pwr1_i = bytestring.find("0101010700FF") + 14 # Active import power
@@ -144,27 +153,25 @@ class Power_meter():
         for i, y in data.items():
             mqttc.publish(i, y)
             counter = counter + 1
-        logger.info("%s data points published" % counter)
+        logger.debug("%s data points published" % counter)
 
     def read_bytes(self):
-        byteCounter = 0
-        bytelist = []
+        timeouts = 0
         while True:
-            a = self.ser.read()
+            a = self.ser.read(700) # reads up to 700 bytes. Times out after 10 sec
             if a:
-                a = ('%02x ' % int(a.encode('hex'), 16)).upper()
-                bytelist.append(a)
-                if a == "7E " and byteCounter > 1:
-                    return bytelist
-                byteCounter = byteCounter + 1
+                b = binascii.hexlify(a)
+                return b.upper()
             else:
-                logger.error("No data, check wiring!")
-                time.sleep(5)
+                timeouts = timeouts + 1
+                if timeouts > 4:
+                    logger.error("No data, check wiring!")
+                    timeouts = 0 # reset conuter and go back to loop
 
 
 if __name__ == '__main__':
     #flow:
-    logger.info("Starting script")
+    logger.info("Starting script in debug mode")
     mqttc = MyMQTTClass()
     mqttc.run()
     time.sleep(10)
@@ -173,11 +180,13 @@ if __name__ == '__main__':
     while True:
         try:
             raw_bytes = app.read_bytes()
-            if app.test_data(raw_bytes):
-                clean_bytes = app.parse_data(raw_bytes)
+            trimmed_data = app.trim_data(raw_bytes)
+            if app.test_data(trimmed_data):
+                clean_bytes = app.parse_data(trimmed_data[0])
                 formated_bytes = app.format_data(clean_bytes)                
                 #app.print_data(formated_bytes) # uncomment if you want to print data to screen
                 app.publish_data(formated_bytes)
+                logger.debug(formated_bytes)
         except KeyboardInterrupt:
             logger.info("exit from keyboard")
             mqttc.disconnect()
