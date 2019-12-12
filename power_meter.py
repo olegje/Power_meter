@@ -6,6 +6,9 @@
 # Modification: 12.12.2019
 ########################################################################
 from __future__ import print_function
+import sys, os #Not needed?
+sys.path.append('/Data/Power_meter') #not needed?
+
 import serial
 import sys
 import datetime
