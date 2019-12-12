@@ -3,7 +3,7 @@
 # Filename    : power_meter_debug.py
 # Description : Script to read and log all data
 # Author      : Gjengedal
-# modification: 10.12.2019
+# modification: 12.12.2019
 ########################################################################
 from __future__ import print_function
 import serial
