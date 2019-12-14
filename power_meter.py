@@ -3,12 +3,9 @@
 # Filename    : power_meter_debug.py
 # Description : Script to read and log all data
 # Author      : Gjengedal
-# Modification: 12.12.2019
+# Modification: 14.12.2019
 ########################################################################
 from __future__ import print_function
-#import sys, os #Not needed?
-#sys.path.append('/Data/Power_meter') #not needed?
-
 import serial
 import sys
 import datetime
@@ -92,8 +89,6 @@ class Power_meter():
         print("Bytestring: %s" % bytestring)
         datastring = bytestring[2:-6]
         crc = bytestring[-6:-2]
-        print("Datastring: %s" % datastring)
-        print("CRC: %s" % crc)
         return datastring, crc
 
     def parse_data(self, bytestring):
@@ -180,20 +175,6 @@ class Power_meter():
                 if timeouts > 20:
                     logger.error("No data, check wiring!")
                     timeouts = 0 # reset conuter and go back to loop
-
-"""     def read_bytes(self):
-        timeouts = 0
-        while True:
-            a = self.ser.read(700) # reads up to 700 bytes. Times out after 1 sec
-            if a:
-                b = binascii.hexlify(a)
-                return b.upper()
-            else:
-                timeouts = timeouts + 1
-                if timeouts > 4:
-                    logger.error("No data, check wiring!")
-                    timeouts = 0 # reset conuter and go back to loop
- """
 
 if __name__ == '__main__':
     #flow:
